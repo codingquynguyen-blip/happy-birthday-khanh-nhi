@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love 🤍</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Cormorant Garamond -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #faf6f5; /* Nền màu kem minimalist ấm áp */
+            color: #2c2524;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        .font-serif-italic {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+        }
+
+        /* 3D Carousel Container */
+        .carousel-container {
+            perspective: 1400px;
+            width: 100%;
+            height: 380px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-3d {
+            width: 200px;
+            height: 270px;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        .carousel-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(214, 189, 185, 0.4);
+            background: #ffffff;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .carousel-item:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(180, 140, 135, 0.8);
+        }
+    </style>
+</head>
+<body class="w-screen h-screen flex flex-col justify-between items-center relative select-none">
+
+    <!-- Nút bật/tắt nhạc phong cách tối giản -->
+    <div class="absolute top-6 right-6 z-50">
+        <button id="musicToggle" class="bg-white/80 hover:bg-white text-stone-700 px-4 py-2 rounded-full backdrop-blur-sm border border-stone-200 transition shadow-sm flex items-center gap-2 text-xs font-medium tracking-wide">
+            <i class="fa-solid fa-music text-rose-400"></i> <span id="musicText">Bật nhạc nền</span>
+        </button>
+        <audio id="bgMusic" loop src="audio/happy-birthday-piano.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- Header Lời chúc -->
+    <header class="z-10 text-center pt-10 px-4">
+        <h1 class="font-serif-italic text-4xl md:text-5xl text-stone-800 tracking-wide">Happy Birthday, Khánh Nhi</h1>
+        <p class="text-xs text-stone-400 mt-2 tracking-widest uppercase font-medium">Mỗi ảnh 1 lời nhắn, em bấm vô xem nhen</p>
+    </header>
+
+    <!-- Khu vực 3D Gallery chính -->
+    <main class="z-10 w-full flex justify-center items-center my-auto">
+        <div class="carousel-container">
+            <div id="carousel3D" class="carousel-3d">
+                <div class="carousel-item" onclick="openModal(0)">
+                    <img src="images/h1.jpg" alt="Tin nhắn đầu tiên">
+                </div>
+                <div class="carousel-item" onclick="openModal(1)">
+                    <img src="images/h2.jpg" alt="Lần đầu tặng hoa em">
+                </div>
+                <div class="carousel-item" onclick="openModal(2)">
+                    <img src="images/h3.jpg" alt="Lần đầu mình đi chơi xa chung">
+                </div>
+                <div class="carousel-item" onclick="openModal(3)">
+                    <img src="images/h4.jpg" alt="Bạn thân em">
+                </div>
+                <div class="carousel-item" onclick="openModal(4)">
+                    <img src="images/h5.jpg" alt="Em bé cuteee">
+                </div>
+                <div class="carousel-item" onclick="openModal(5)">
+                    <img src="images/h6.jpg" alt="Tụi mình">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Lời nhắn nhủ -->
+    <footer class="z-10 pb-10 text-center px-4 max-w-md mx-auto">
+        <p class="text-xs md:text-sm text-stone-600 font-normal bg-white/60 backdrop-blur-sm px-6 py-3 rounded-full border border-stone-200/60 shadow-sm">
+            "Chúc em sinh nhật vui vẻ, tuổi mới nhiều niềm vui, hạnh phúc hơn. Mong em luôn vui với con đường em đã chọn. Gia đình, bạn bè và anh luôn mong những điều tốt với em. Mong anh và em có nhiều cơ hội, trải nghiệm và khám phá nhiều cái mới hơn, thêm gia vị cho cuộc sống 2 đứa. Anh yêu em nhiềuuu, luôn cười tươi nhe emm"
+        </p>
+    </footer>
+
+    <!-- Modal Phóng to ảnh & Xem lời nhắn chi tiết -->
+    <div id="imageModal" class="fixed inset-0 bg-stone-900/40 backdrop-blur-md z-50 hidden flex justify-center items-center p-4">
+        <div class="bg-white border border-stone-200 rounded-2xl max-w-sm w-full p-6 relative text-center shadow-2xl transform scale-95 transition-transform duration-300" id="modalContent">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-700 w-7 h-7 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+            <div class="w-full h-64 rounded-lg overflow-hidden mb-4 border border-stone-100 bg-stone-50">
+                <img id="modalImg" src="" alt="Zoom Image" class="w-full h-full object-cover">
+            </div>
+            <h3 id="modalTitle" class="font-serif-italic text-2xl text-stone-800 mb-1">Khoảnh khắc</h3>
+            <p id="modalDesc" class="text-xs text-stone-500 leading-relaxed font-light">...</p>
+        </div>
+    </div>
+
+    <!-- JavaScript Xử lý hiệu ứng 3D & Tương tác -->
+    <script>
+        const memories = [
+            { title: "Tin nhắn đầu tiên", desc: "Tin nhắn đầu anh gửi em, từ xa lạ đến giờ mình thân quen hơn, anh biết ơn em cho anh cơ hội xuất hiện trong cuộc sống của em" },
+            { title: "Lần đầu tặng hoa em", desc: "Em bảo lần đầu có người tặng hoa tươi cho em, em mua luôn cả bình cắm hoa, anh rất trân trọng điều này." },
+            { title: "Chuyến đi xa đầu tiên", desc: "Lần đầu em dám đi xa 1 mình ra NT với anh, gan đấy, cơ mà chuyến này xong thì mình gắn kết hơn." },
+            { title: "Bạn thân em", desc: "Chuoideptrai và berdeptrai là 2 bạn thân của emmm" },
+            { title: "Em bé cuteee", desc: "Mong em mãi vô tư, tươi vui như này, anh cũng chỉ muốn em luôn vuiiii, như thế anh cũng sẽ vui theooo" },
+            { title: "Tụi mình", desc: "Mong là có thêm nhiều cơ hội, tụi mình thêm nhiều race cùng nhau nhé" }
+        ];
+
+        const carousel = document.getElementById('carousel3D');
+        const items = document.querySelectorAll('.carousel-item');
+        const itemCount = items.length;
+        const angleStep = 360 / itemCount;
+        let currentAngle = 0;
+        let radius = 260;
+
+        function updateCarouselLayout() {
+            radius = window.innerWidth < 768 ? 180 : 260;
+            items.forEach((item, index) => {
+                const angle = index * angleStep;
+                item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+            });
+        }
+        updateCarouselLayout();
+        window.addEventListener('resize', updateCarouselLayout);
+
+        let isDragging = false;
+        let startX = 0;
+        let currentX = 0;
+
+        // Auto xoay nhẹ nhàng
+        let autoRotateTimer = setInterval(() => {
+            if (!isDragging) {
+                currentAngle += 0.15;
+                carousel.style.transform = `rotateY(${currentAngle}deg)`;
+            }
+        }, 30);
+
+        document.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX; });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            currentX = e.clientX;
+            currentAngle += (currentX - startX) * 0.3;
+            carousel.style.transform = `rotateY(${currentAngle}deg)`;
+            startX = currentX;
+        });
+        document.addEventListener('mouseup', () => { isDragging = false; });
+
+        document.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; });
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+            currentAngle += (currentX - startX) * 0.4;
+            carousel.style.transform = `rotateY(${currentAngle}deg)`;
+            startX = currentX;
+        });
+        document.addEventListener('touchend', () => { isDragging = false; });
+
+        function openModal(index) {
+            const modal = document.getElementById('imageModal');
+            const modalContent = document.getElementById('modalContent');
+            document.getElementById('modalImg').src = items[index].querySelector('img').src;
+            document.getElementById('modalTitle').textContent = memories[index].title;
+            document.getElementById('modalDesc').textContent = memories[index].desc;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            const modalContent = document.getElementById('modalContent');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); }, 200);
+        }
+
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target.id === 'imageModal') {
+                closeModal();
+            }
+        });
+
+        const musicToggle = document.getElementById('musicToggle');
+        const bgMusic = document.getElementById('bgMusic');
+        const musicText = document.getElementById('musicText');
+        let isPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (!isPlaying) {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    musicText.textContent = "Đang phát nhạc";
+                    musicToggle.classList.add('bg-stone-100');
+                }).catch(err => {
+                    alert("Hãy bấm lại lần nữa để phát nhạc nhé!");
+                });
+            } else {
+                bgMusic.pause();
+                isPlaying = false;
+                musicText.textContent = "Bật nhạc nền";
+                musicToggle.classList.remove('bg-stone-100');
+            }
+        });
+    </script>
+</body>
+</html>
